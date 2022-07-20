@@ -30,9 +30,15 @@ $router->get('/profile', ['as' => 'profile' , 'uses' => 'ExampleController@getPr
 $router->get('/profile/action', ['as' => 'profile.action', 'uses' => 'ExampleController@getProfileAction']);
 
 
+
+
 $router->get('admin/home', ['middleware' => 'age', function () {
     return 'Old enough';
 }]);
+
+$router->get('/foo/bar', 'ExampleController@fooBar');
+$router->post('/bar/foo', 'ExampleController@fooBar');
+
 
 $router->get('fail', function () {
     return 'Not yet mature';
