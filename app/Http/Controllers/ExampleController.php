@@ -34,4 +34,16 @@ class ExampleController extends Controller
     {
         return 'Category 1 = ' . $cat1 . ' Category 2 =' . $cat2;
     }
+
+    public function getProfile()
+    {
+        echo '<a href="'.route('profile.action') .'">Pofile Action</a>';
+    }
+
+    public function getProfileAction()
+    {
+        return 'Router Profile : ' . route('profile');
+    }
+
+
 }
