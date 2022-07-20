@@ -20,8 +20,7 @@ class AuthController extends Controller
         $register = User::create([
             'name' => $name,
             'email' => $email,
-            'password' => $password,
-            'api_token' => $api
+            'password' => $password
         ]);
 
         if($register)
@@ -42,7 +41,34 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $email = $request->input('email');
+        $password = $request->input('password');
 
+        $user = User::where('email', $email)->first();
+
+        if(Hash::check($password, $user->password))
+        {
+            $apiToken = base64_encode(Str::random(40));
+
+            $user->update([
+                'api_token' => $apiToken
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'massage' => 'Login success',
+                'data' => [
+                    'user' => $user,
+                    'api token' => $apiToken
+                ]
+            ], 201);
+        }else {
+            return response()->json([
+                'success' => false,
+                'massage' => 'Login fail',
+                'data' => ''
+            ], 400);
+        }
     }
 
 }
