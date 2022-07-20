@@ -15,7 +15,7 @@ class ExampleController extends Controller
         // jalan kan middleware only get user
         //$this->middleware('age', ['only' => ['getUser']]);
         // jalan kan middleware ke semua kecuali getUser
-        $this->middleware('age', ['except' => ['getUser']]);
+        //$this->middleware('age', ['except' => ['getUser']]);
     }
 
     public function keyGenerate()
@@ -61,4 +61,33 @@ class ExampleController extends Controller
         // Melihat Method
         return $request->method();
     }
+
+
+    public function userProfile(Request $request)
+    {
+        // memasukan ke variabel
+        // $user['name'] = $request->name;
+        // $user['username'] = $request->username;
+        // $user['email'] = $request->email;
+        // $user['password'] = $request->password;
+
+        // return $user;
+
+        // Mengambil semua data langsung
+        // return $request->all();
+        // Memberi nilai defualt
+        // return $request->input('name', 'Dimas');
+
+        // Kondisi
+        // if($request->has('name'))
+        // {
+        //     return 'Success';
+        // }else{
+        //     return 'Fail';
+        // }
+        return $request->only('name', 'email');
+
+    }
+
+
 }
