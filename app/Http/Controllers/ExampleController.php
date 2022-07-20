@@ -12,7 +12,10 @@ class ExampleController extends Controller
      */
     public function __construct()
     {
-        //
+        // jalan kan middleware only get user
+        //$this->middleware('age', ['only' => ['getUser']]);
+        // jalan kan middleware ke semua kecuali getUser
+        $this->middleware('age', ['except' => ['getUser']]);
     }
 
     public function keyGenerate()
