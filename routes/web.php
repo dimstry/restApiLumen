@@ -44,3 +44,6 @@ $router->post('/user/profile/request', 'ExampleController@userProfile');
 $router->get('fail', function () {
     return 'Not yet mature';
 });
+
+
+$router->get('/response', 'ExampleController@response');

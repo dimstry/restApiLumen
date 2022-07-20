@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 class ExampleController extends Controller
 {
     /**
@@ -86,7 +87,18 @@ class ExampleController extends Controller
         //     return 'Fail';
         // }
         return $request->only('name', 'email');
+    }
 
+    public function response()
+    {
+        $data['status'] = 'success';
+        // return (new Response($data, 201))
+        //     ->header('Content-type', 'application/json');
+
+        return response()->json([
+            'massage' => 'Fail!! not found',
+            'status' => false
+        ], 404);
     }
 
 
