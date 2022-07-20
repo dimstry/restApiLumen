@@ -16,21 +16,23 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+// Route register
+$router->post('/register', 'AuthController@register');
+$router->post('/login', 'AuthController@login');
+
+
+
+
 // Key genarate 
 $router->get('/key', 'ExampleController@keyGenerate');
 
 $router->post('/foo', 'ExampleController@postController');
-
-
 
 $router->get('/user/{id}', 'ExampleController@getUser');
 $router->get('/pos/cat1/{cat1}/cat2/{cat2}', 'ExampleController@Category');
 
 $router->get('/profile', ['as' => 'profile' , 'uses' => 'ExampleController@getProfile']);
 $router->get('/profile/action', ['as' => 'profile.action', 'uses' => 'ExampleController@getProfileAction']);
-
-
-
 
 $router->get('admin/home', ['middleware' => 'age', function () {
     return 'Old enough';
@@ -44,6 +46,5 @@ $router->post('/user/profile/request', 'ExampleController@userProfile');
 $router->get('fail', function () {
     return 'Not yet mature';
 });
-
 
 $router->get('/response', 'ExampleController@response');
