@@ -14,10 +14,13 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
+    public function datas()
+    {
+    }
+
     public function show($id)
     {
         $user = User::find($id); 
-
         if($user){
             return response()->json([
                 'success' => true,

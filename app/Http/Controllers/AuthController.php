@@ -6,7 +6,8 @@ use GrahamCampbell\ResultType\Result;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use Illuminate\Support\Str;
+use Firebase\JWT\JWT;
+
 
 class AuthController extends Controller
 {
@@ -16,7 +17,6 @@ class AuthController extends Controller
         $name = $request->input('name');
         $email = $request->input('email');
         $password = Hash::make($request->input('password'));
-        $api = Str::random(10);
         $register = User::create([
             'name' => $name,
             'email' => $email,
@@ -48,8 +48,13 @@ class AuthController extends Controller
 
         if(Hash::check($password, $user->password))
         {
-            $apiToken = base64_encode(Str::random(40));
+            $payload = [
+                'iat' => intval(microtime(true)),
+                'exp' => intval(microtime(true)) + (60 * 60 * 1000),
+                'uid' => $user['id']
+            ];
 
+            $apiToken = JWT::encode($payload, env('JWT_KEY'), 'HS256');
             $user->update([
                 'api_token' => $apiToken
             ]);
