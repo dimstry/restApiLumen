@@ -22,7 +22,6 @@ $router->post('/login', 'AuthController@login');
 $router->get('/user/{id}', 'UserController@show');
 
 
-
 // // Key genarate 
 // $router->get('/key', 'ExampleController@keyGenerate');
 
