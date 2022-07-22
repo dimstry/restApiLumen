@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 class UserController extends Controller
 {
     /**
@@ -15,8 +17,13 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-    public function datas()
+    public function datas(Request $request)
     {
+        $tokenApi = explode(' ',$request->header('Authorization'));
+        // var_dump($tokenApi[1]);
+        $decoded = JWT::decode($tokenApi[1], new Key(env('JWT_KEY'), 'HS256'));
+        var_dump($decoded);
+
     }
 
     public function show($id)
