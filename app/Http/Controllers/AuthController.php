@@ -45,7 +45,6 @@ class AuthController extends Controller
         $password = $request->input('password');
 
         $user = User::where('email', $email)->first();
-
         if(Hash::check($password, $user->password))
         {
             $payload = [

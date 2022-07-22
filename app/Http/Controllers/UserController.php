@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Illuminate\Support\Facades\Date;
 class UserController extends Controller
 {
     /**
@@ -22,7 +23,16 @@ class UserController extends Controller
         $tokenApi = explode(' ',$request->header('Authorization'));
         // var_dump($tokenApi[1]);
         $decoded = JWT::decode($tokenApi[1], new Key(env('JWT_KEY'), 'HS256'));
-        var_dump($decoded);
+        // exp time
+        $exp = $decoded->exp;
+        $now = time(); 
+        var_dump('jam exp '.$exp);
+        var_dump('jam sekarang '.$now);
+        if ($exp >= $now) {
+            return 'token kadaluarsa';
+        }else{
+            return 'bisa';
+        }
 
     }
 
