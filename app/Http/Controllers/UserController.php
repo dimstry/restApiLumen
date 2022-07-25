@@ -24,11 +24,11 @@ class UserController extends Controller
         // var_dump($tokenApi[1]);
         $decoded = JWT::decode($tokenApi[1], new Key(env('JWT_KEY'), 'HS256'));
         // exp time
-        $exp = $decoded->exp;
+        $exp = '1658716555';
         $now = time(); 
-        var_dump('jam exp '.$exp);
-        var_dump('jam sekarang '.$now);
-        if ($exp >= $now) {
+        // var_dump('jam exp '.$exp);
+        // var_dump('jam sekarang '.$now);
+        if ($exp < $now) {
             return 'token kadaluarsa';
         }else{
             return 'bisa';
