@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2022 at 11:01 AM
+-- Generation Time: Jul 25, 2022 at 05:31 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -20,6 +20,17 @@ SET time_zone = "+00:00";
 --
 -- Database: `test`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `id` text NOT NULL,
+  `nama` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -43,6 +54,39 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `owner`
+--
+
+CREATE TABLE `owner` (
+  `owner_id` text NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `layanan` varchar(255) NOT NULL,
+  `product_list` varchar(255) NOT NULL,
+  `lokasi` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `id` text NOT NULL,
+  `nama_product` varchar(255) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `harga` varchar(255) NOT NULL,
+  `owner_id` text NOT NULL,
+  `stok` varchar(255) NOT NULL,
+  `gambar` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `info` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -62,7 +106,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `api_token`, `created_at`, `updated_at`) VALUES
 (2, 'test', 'test@gmail.com', '$2y$10$Xss0KpLKgcy4WFNpiVXOGOT6Y7k2U/tySF65AUeFJNHjMj5UsLTBa', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTgzODgzNTQsImV4cCI6MTY2MTk4ODM1NCwidWlkIjoyfQ.HdrfmJrsv-XESi6OEkRMShECFmv47yjOg3gNwHE9Tuc', '2022-07-20 08:57:53', '2022-07-21 07:25:54'),
-(3, 'dimas', 'dimas@gmail.com', '$2y$10$yY4eMRxa9HYEgTOWmFldseLYZZgVsgGLEnfW..NTiz3OrYs7moxHq', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTgzOTEzMzMsImV4cCI6MTY2MTk5MTMzMywidWlkIjozfQ.BHIghBpaaSGc-1t7FK3wShETzE3oshpbovMbhqUuc-k', '2022-07-20 09:12:49', '2022-07-21 08:15:33');
+(3, 'dimas', 'dimas@gmail.com', '$2y$10$yY4eMRxa9HYEgTOWmFldseLYZZgVsgGLEnfW..NTiz3OrYs7moxHq', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTg0NjIyMDUsImV4cCI6MTY2MjA2MjIwNSwidWlkIjozfQ.Thb_g6cMukH-sQRLGkDvRTl-CCjMc2o2y6vl_vNe44o', '2022-07-20 09:12:49', '2022-07-22 03:56:45'),
+(4, 'user3', 'user3@gmail.com', '$2y$10$T1Rj5P.QuK3sqfCN8kTd4.lA/.5ucOs/u3GYcIYXLM9ViefGVnocu', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTg3MTYwMTksImV4cCI6MTY2MjMxNjAxOSwidWlkIjo0fQ.QkXVhT2nPbliHEiodKHOr8uDZCd14k2IO6F1jMGGbTg', '2022-07-25 02:26:31', '2022-07-25 02:26:59');
 
 --
 -- Indexes for dumped tables
@@ -95,7 +140,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
