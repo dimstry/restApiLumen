@@ -14,9 +14,14 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $name = $request->input('name');
-        $email = $request->input('email');
-        $password = Hash::make($request->input('password'));
+        $validated = $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'password' => 'required'
+        ]);
+        $name = $validated['name'];
+        $email = $validated['email'];
+        $password = Hash::make($validated['password']);
         $register = User::create([
             'name' => $name,
             'email' => $email,
@@ -41,8 +46,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $email = $request->input('email');
-        $password = $request->input('password');
+        $validated = $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+        $email = $validated['email'];
+        $password = $validated['password'];
 
         $user = User::where('email', $email)->first();
         if(Hash::check($password, $user->password))
@@ -50,6 +59,7 @@ class AuthController extends Controller
             $payload = [
                 'iat' => intval(microtime(true)),
                 'exp' => intval(microtime(true)) + (60 * 60 * 1000),
+                'allowed_role' => 'user',
                 'uid' => $user['id']
             ];
 
