@@ -54,11 +54,13 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
+
         $email = $validated['email'];
         $password = $validated['password'];
 
         $user = User::where('email', $email)->first();
         var_dump($user);
+        
         if (Hash::check($password, $user->password)) {
             $payload = [
                 'iat' => intval(microtime(true)),
