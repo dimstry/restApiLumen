@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2022 at 05:31 PM
+-- Generation Time: Jul 27, 2022 at 09:29 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -28,8 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `category` (
-  `id` text NOT NULL,
-  `nama` varchar(255) NOT NULL
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `update_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -54,34 +56,39 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `owner`
+-- Table structure for table `product`
 --
 
-CREATE TABLE `owner` (
-  `owner_id` text NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `deskripsi` text NOT NULL,
-  `layanan` varchar(255) NOT NULL,
-  `product_list` varchar(255) NOT NULL,
-  `lokasi` varchar(255) NOT NULL
+CREATE TABLE `product` (
+  `id` varchar(255) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `price` varchar(255) NOT NULL,
+  `seller_id` varchar(255) NOT NULL,
+  `category_id` varchar(255) NOT NULL,
+  `stock` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `info` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Table structure for table `seller`
 --
 
-CREATE TABLE `product` (
-  `id` text NOT NULL,
-  `nama_product` varchar(255) NOT NULL,
-  `deskripsi` text NOT NULL,
-  `harga` varchar(255) NOT NULL,
-  `owner_id` text NOT NULL,
-  `stok` varchar(255) NOT NULL,
-  `gambar` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `info` text NOT NULL
+CREATE TABLE `seller` (
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `delivery_service` varchar(255) NOT NULL,
+  `list_product` varchar(255) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -91,27 +98,23 @@ CREATE TABLE `product` (
 --
 
 CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `api_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `api_token`, `created_at`, `updated_at`) VALUES
-(2, 'test', 'test@gmail.com', '$2y$10$Xss0KpLKgcy4WFNpiVXOGOT6Y7k2U/tySF65AUeFJNHjMj5UsLTBa', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTgzODgzNTQsImV4cCI6MTY2MTk4ODM1NCwidWlkIjoyfQ.HdrfmJrsv-XESi6OEkRMShECFmv47yjOg3gNwHE9Tuc', '2022-07-20 08:57:53', '2022-07-21 07:25:54'),
-(3, 'dimas', 'dimas@gmail.com', '$2y$10$yY4eMRxa9HYEgTOWmFldseLYZZgVsgGLEnfW..NTiz3OrYs7moxHq', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTg0NjIyMDUsImV4cCI6MTY2MjA2MjIwNSwidWlkIjozfQ.Thb_g6cMukH-sQRLGkDvRTl-CCjMc2o2y6vl_vNe44o', '2022-07-20 09:12:49', '2022-07-22 03:56:45'),
-(4, 'user3', 'user3@gmail.com', '$2y$10$T1Rj5P.QuK3sqfCN8kTd4.lA/.5ucOs/u3GYcIYXLM9ViefGVnocu', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NTg3MTYwMTksImV4cCI6MTY2MjMxNjAxOSwidWlkIjo0fQ.QkXVhT2nPbliHEiodKHOr8uDZCd14k2IO6F1jMGGbTg', '2022-07-25 02:26:31', '2022-07-25 02:26:59');
+  `id` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `migrations`
@@ -120,11 +123,24 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `seller_id` (`seller_id`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `seller`
+--
+ALTER TABLE `seller`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -137,10 +153,20 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `users`
+-- Constraints for dumped tables
 --
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Constraints for table `category`
+--
+ALTER TABLE `category`
+  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`id`) REFERENCES `product` (`category_id`);
+
+--
+-- Constraints for table `seller`
+--
+ALTER TABLE `seller`
+  ADD CONSTRAINT `seller_ibfk_1` FOREIGN KEY (`id`) REFERENCES `product` (`seller_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
