@@ -15,14 +15,14 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
     public function datas(Request $request)
     {
         $tokenApi = explode(' ',$request->header('Authorization'));
-        // var_dump($tokenApi[1]);
         $decoded = JWT::decode($tokenApi[1], new Key(env('JWT_KEY'), 'HS256'));
+        // var_dump($decoded);
         // exp time
         // $exp = '1658716555';
         $exp = $decoded->exp;
@@ -54,8 +54,6 @@ class UserController extends Controller
 
     public function show($id)
     {
-
-        
         $user = User::find($id); 
         if($user){
             return response()->json([

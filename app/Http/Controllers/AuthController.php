@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Firebase\JWT\JWT;
+use Illuminate\Support\Str;
 
 
 class AuthController extends Controller
@@ -15,27 +16,30 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $this->validate($request, [
-            'name' => 'required|max:255',
+            'username' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required'
         ]);
-        $name = $validated['name'];
-        $email = $validated['email'];
-        $password = Hash::make($validated['password']);
+
+        $id         = bin2hex(random_bytes(4)) . "-" . bin2hex(random_bytes(4)) . "-" . date('YmdHisms');
+        $name       = $validated['username'];
+        $email      = $validated['email'];
+        $password   = Hash::make($validated['password']);
+        
         $register = User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => $password
+            'id'        => $id,
+            'username'  => $name,
+            'email'     => $email,
+            'password'  => $password
         ]);
 
-        if($register)
-        {
+        if ($register) {
             return response()->json([
                 'success' => true,
                 'massage' => 'Register Success',
                 'data' => $register
             ], 201);
-        }else{            
+        } else {
             return response()->json([
                 'success' => false,
                 'massage' => 'Register Fail!!',
@@ -54,8 +58,8 @@ class AuthController extends Controller
         $password = $validated['password'];
 
         $user = User::where('email', $email)->first();
-        if(Hash::check($password, $user->password))
-        {
+        var_dump($user);
+        if (Hash::check($password, $user->password)) {
             $payload = [
                 'iat' => intval(microtime(true)),
                 'exp' => intval(microtime(true)) + (60 * 60 * 1000),
@@ -76,7 +80,7 @@ class AuthController extends Controller
                     'api token' => $apiToken
                 ]
             ], 201);
-        }else {
+        } else {
             return response()->json([
                 'success' => false,
                 'massage' => 'Login fail',
@@ -84,5 +88,4 @@ class AuthController extends Controller
             ], 400);
         }
     }
-
 }
