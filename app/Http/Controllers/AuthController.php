@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Firebase\JWT\JWT;
-use Illuminate\Support\Str;
-
 
 class AuthController extends Controller
 {
@@ -60,7 +58,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $email)->first();
         var_dump($user);
-        
+
         if (Hash::check($password, $user->password)) {
             $payload = [
                 'iat' => intval(microtime(true)),
