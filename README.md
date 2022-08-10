@@ -1,4 +1,5 @@
 # Lumen PHP Framework
+* <a href="https://jwt.io/">JWT</a> TOKEN FOR API TOKEN
 
 [![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
