@@ -30,8 +30,8 @@ class AuthController extends Controller
             'email'     => $email,
             'password'  => $password
         ]);
-
         if ($register) {
+            var_dump($register);
             return response()->json([
                 'success' => true,
                 'massage' => 'Register Success',
